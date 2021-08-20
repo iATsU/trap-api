@@ -7,7 +7,7 @@ app = flask.Flask(__name__)
 #app.config["DEBUG"] = True
 
 
-data = pd.read_excel('dogs.xlsx', usecols=['Breed', 'Eyes', 'Background', 'Drug', 'Clothing', 'Accessory', 'Rarity'])
+data = pd.read_excel('dogs.xlsx', usecols=['Breed', 'Eyes', 'Background', 'Drug', 'Clothing', 'Accessory', 'Rarity', 'Rank'])
 
 dogs = []
 
@@ -23,17 +23,13 @@ for row in data.itertuples(index=True, name='Pandas'):
             {'trait_type':'Drug', 'value':row.Drug},
             {'trait_type':'Clothing', 'value':row.Clothing},
             {'trait_type':'Accessory', 'value':row.Accessory},
-            {'trait_type':'Rarity', 'value':row.Rarity}
+            {'trait_type':'Rarity', 'value':row.Rarity},
+            {'trait_type':'Rank', 'value':row.Rank}
             ],
-        'image': f'https://trapdogs.app/images/{row.Index}'
+        'image': f'https://trapdogs.app/images/{row.Index}.gif'
         }        
     
     dogs.append(meta)
-
-@app.route('/api/trapDogMeta/all', methods=['GET'])
-def api_all():
-    return jsonify(dogs)
-
 
 @app.route('/api/trapDogMeta', methods=['GET'])
 def api_index():
